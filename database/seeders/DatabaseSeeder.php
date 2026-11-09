@@ -10,22 +10,30 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => 'admin@mehfil.test'],
+        $users = [
             [
+                'email' => 'admin@mehfil.test',
                 'name' => 'Mehfil Admin',
-                'password' => Hash::make('Admin@12345'),
+                'password' => 'Admin@12345',
                 'role' => 'admin',
-            ]
-        );
-
-        User::updateOrCreate(
-            ['email' => 'customer@mehfil.test'],
+            ],
             [
+                'email' => 'customer@mehfil.test',
                 'name' => 'Test Customer',
-                'password' => Hash::make('Customer@12345'),
+                'password' => 'Customer@12345',
                 'role' => 'customer',
-            ]
-        );
+            ],
+        ];
+
+        foreach ($users as $data) {
+            $user = User::firstOrNew(['email' => $data['email']]);
+
+            $user->forceFill([
+                'name' => $data['name'],
+                'password' => Hash::make($data['password']),
+                'role' => $data['role'],
+                'email_verified_at' => now(),
+            ])->save();
+        }
     }
 }
