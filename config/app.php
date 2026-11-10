@@ -17,6 +17,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'admin_registration_code' => env('ADMIN_REGISTRATION_CODE'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
