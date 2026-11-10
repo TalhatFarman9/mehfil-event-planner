@@ -31,3 +31,10 @@ Full comparison: [docs/auth-decision-log.pdf](docs/auth-decision-log.pdf)
 |----------|----------------------|----------------|
 | Admin    | admin@mehfil.test    | Admin@12345    |
 | Customer | customer@mehfil.test | Customer@12345 |
+
+## Features (Task 1)
+
+- Registration and login for customers (default role) and admins
+- Role middleware: `/admin/*` routes are admin-only, others get 403
+- Customer booking dashboard and admin sidebar dashboard
+- Email verification stub (mail driver set to `log`)
