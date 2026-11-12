@@ -38,3 +38,6 @@ Full comparison: [docs/auth-decision-log.pdf](docs/auth-decision-log.pdf)
 - Role middleware: `/admin/*` routes are admin-only, others get 403
 - Customer booking dashboard and admin sidebar dashboard
 - Email verification stub (mail driver set to `log`)
+
+  Admin registration at `/admin/register` needs the code from `ADMIN_REGISTRATION_CODE`
+  in `.env` (local dev default: `Mehfil-Admin-2026`, change it in production).
