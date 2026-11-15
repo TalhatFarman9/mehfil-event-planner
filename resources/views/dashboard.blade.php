@@ -1,14 +1,17 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">My Bookings</h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                <p class="mb-4">Khush amdeed, {{ auth()->user()->name }}!</p>
-                <p class="text-gray-500">Abhi aap ki koi booking nahi ha. Booking ka feature agle task mein aayega.</p>
-            </div>
+<x-admin-layout>
+    <h1 class="text-2xl font-semibold mb-6">Admin Dashboard</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-500">Total Bookings</p>
+            <p class="text-3xl font-bold">{{ \App\Models\Booking::count() }}</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-500">Customers</p>
+            <p class="text-3xl font-bold">{{ \App\Models\User::where('role', 'customer')->count() }}</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-500">Upcoming Events</p>
+            <p class="text-3xl font-bold">{{ \App\Models\Booking::whereDate('event_date', '>=', today())->where('status', '!=', 'cancelled')->count() }}</p>
         </div>
     </div>
-</x-app-layout>
+</x-admin-layout>

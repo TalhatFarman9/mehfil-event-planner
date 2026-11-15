@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BookingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +25,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
+
+        Route::resource('bookings', BookingController::class)
+            ->only(['index', 'edit', 'update', 'destroy']);
     });
 
 require __DIR__.'/auth.php';
