@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +35,10 @@ class DatabaseSeeder extends Seeder
                 'role' => $data['role'],
                 'email_verified_at' => now(),
             ])->save();
+        }
+
+        if (Booking::count() === 0) {
+            Booking::factory()->count(35)->create();
         }
     }
 }
