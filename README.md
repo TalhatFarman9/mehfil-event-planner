@@ -41,3 +41,10 @@ Full comparison: [docs/auth-decision-log.pdf](docs/auth-decision-log.pdf)
 
   Admin registration at `/admin/register` needs the code from `ADMIN_REGISTRATION_CODE`
   in `.env` (local dev default: `Mehfil-Admin-2026`, change it in production).
+
+  ## Task 2: Admin booking panel
+
+- `/admin/bookings`: paginated table (10 per page) with edit and delete.
+- Search by client name or event date, filter by status and exact date.
+- Delete asks for confirmation. All routes are behind `auth:sanctum` and `role:admin`.
+- Demo data: `php artisan migrate --seed` creates 35 sample bookings.
