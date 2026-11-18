@@ -22,7 +22,4 @@ class Booking extends Model
         'notes',
     ];
 
-    protected $casts = [
-        'event_date' => 'date',
-    ];
 }

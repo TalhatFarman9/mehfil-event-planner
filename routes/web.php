@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
 });
 
 Route::middleware(['auth:sanctum', 'role:admin'])
@@ -26,7 +31,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])
     ->group(function () {
         Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
 
-        Route::resource('bookings', BookingController::class)
+        Route::resource('bookings', AdminBookingController::class)
             ->only(['index', 'edit', 'update', 'destroy']);
     });
 
