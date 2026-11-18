@@ -102,6 +102,8 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'admin_address' => env('MAIL_ADMIN_ADDRESS', 'admin@mehfil.test'),
+    
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings
@@ -120,5 +122,4 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
 ];
