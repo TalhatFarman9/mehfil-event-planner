@@ -54,7 +54,7 @@
                             <div class="text-gray-500">{{ $booking->client_email }}</div>
                         </td>
                         <td class="px-4 py-3">{{ $booking->event_type }}</td>
-                        <td class="px-4 py-3">{{ $booking->event_date->format('d M Y') }}</td>
+                        <td class="px-4 py-3">{{ \Carbon\Carbon::parse($booking->event_date)->format('d M Y') }}</td>
                         <td class="px-4 py-3">{{ $booking->guests }}</td>
                         <td class="px-4 py-3"><x-status-badge :status="$booking->status" /></td>
                         <td class="px-4 py-3 whitespace-nowrap">

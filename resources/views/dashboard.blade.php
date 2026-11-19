@@ -1,4 +1,7 @@
 <x-app-layout>
+
+<a href="{{ route('bookings.create') }}" class="bg-purple-600 text-white px-4 py-2 rounded">Naya Event Book Karein</a>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">My Bookings</h2>
     </x-slot>
