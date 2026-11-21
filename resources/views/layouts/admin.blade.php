@@ -13,25 +13,31 @@
         <div class="px-6 py-5 text-xl font-bold border-b border-gray-700">
             Mehfil Admin
         </div>
-        
+
         <nav class="flex-1 px-4 py-4 space-y-1">
-    <a href="{{ route('admin.dashboard') }}"
-       class="block px-3 py-2 rounded hover:bg-gray-700 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }}">Dashboard</a>
-    <a href="{{ route('admin.bookings.index') }}"
-       class="block px-3 py-2 rounded hover:bg-gray-700 {{ request()->routeIs('admin.bookings.*') ? 'bg-gray-700' : '' }}">Bookings</a>
-    <span class="flex items-center justify-between px-3 py-2 rounded text-gray-500 cursor-not-allowed">
-        Events <span class="text-xs bg-gray-700 text-gray-300 rounded px-2 py-0.5">Soon</span>
-    </span>
-    <span class="flex items-center justify-between px-3 py-2 rounded text-gray-500 cursor-not-allowed">
-        Customers <span class="text-xs bg-gray-700 text-gray-300 rounded px-2 py-0.5">Soon</span>
-    </span>
-</nav>
+            <a href="{{ route('admin.dashboard') }}"
+               class="block px-3 py-2 rounded hover:bg-gray-700 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }}">Dashboard</a>
+
+            <a href="{{ route('admin.bookings.index') }}"
+               class="block px-3 py-2 rounded hover:bg-gray-700 {{ request()->routeIs('admin.bookings.*') ? 'bg-gray-700' : '' }}">Bookings</a>
+
+            <a href="{{ route('admin.kpi.index') }}"
+               class="block px-3 py-2 rounded hover:bg-gray-700 {{ request()->routeIs('admin.kpi.*') ? 'bg-gray-700' : '' }}">KPI Dashboard</a>
+
+            <span class="flex items-center justify-between px-3 py-2 rounded text-gray-500 cursor-not-allowed">
+                Events <span class="text-xs bg-gray-700 text-gray-300 rounded px-2 py-0.5">Soon</span>
+            </span>
+            <span class="flex items-center justify-between px-3 py-2 rounded text-gray-500 cursor-not-allowed">
+                Customers <span class="text-xs bg-gray-700 text-gray-300 rounded px-2 py-0.5">Soon</span>
+            </span>
+        </nav>
 
         <form method="POST" action="{{ route('logout') }}" class="p-4 border-t border-gray-700">
             @csrf
             <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-700">Logout</button>
         </form>
     </aside>
+
     <main class="flex-1 p-8">
         {{ $slot }}
     </main>
