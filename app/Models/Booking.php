@@ -20,6 +20,7 @@ class Booking extends Model
         'guests',
         'status',
         'notes',
+        'amount',
     ];
 
 }

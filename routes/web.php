@@ -4,7 +4,14 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\Admin\KpiController;
 
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // ... tumhare existing booking routes ...
+    Route::get('/kpi', [KpiController::class, 'index'])->name('kpi.index');
+    Route::get('/kpi/data', [KpiController::class, 'data'])->name('kpi.data');
+    Route::get('/kpi/export', [KpiController::class, 'export'])->name('kpi.export');
+});
 Route::get('/', function () {
     return view('welcome');
 });
