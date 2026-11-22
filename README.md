@@ -67,8 +67,17 @@ Measured with Chrome DevTools (Network tab, Disable cache, Fast 4G throttling, h
 | 3 | 822 ms | 1.03 s |
 | Avg | ~868 ms | ~1.07 s |
 
-`kpi/data` request time: _ ms (apni value likho)
+`kpi/data` request time: 206 ms (Chrome DevTools, Fast 4G, cache disabled)
 
 Result: page load stays under 2 s in the local test. Free host test: pending (will be measured after deployment).
 Screenshot: `docs/performance-kpi.png`
 Optimizations: single aggregate query, index on `event_date`, 60 s response cache, Chart.js via CDN.
+
+### CSV export
+- Button: "Download CSV" in `resources/views/admin/kpi.blade.php`
+- Route: `GET /admin/kpi/export` (admin only), defined in `routes/web.php`
+- Code: `KpiController::export()` in `app/Http/Controllers/Admin/KpiController.php` uses `response()->streamDownload()` (Laravel StreamedResponse) with `fputcsv()`
+- Format: UTF-8 with BOM (opens correctly in Excel). Part 1: summary (`Metric,Value`). Part 2: monthly table (`Month,Bookings,Revenue (PKR)`)
+- Real sample file downloaded from the app: `docs/sample-kpi-export.csv`
+
+Note: totals exclude cancelled bookings, so they are lower than the total count on the Bookings page.
