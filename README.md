@@ -48,3 +48,27 @@ Full comparison: [docs/auth-decision-log.pdf](docs/auth-decision-log.pdf)
 - Search by client name or event date, filter by status and exact date.
 - Delete asks for confirmation. All routes are behind `auth:sanctum` and `role:admin`.
 - Demo data: `php artisan migrate --seed` creates 35 sample bookings.
+
+## KPI Dashboard (Task 4)
+
+- URL: `/admin/kpi` (admin only: `auth` + `role:admin` middleware)
+- Charts (Chart.js 4): bookings per month (bar), revenue trend (line), bookings vs revenue (combo)
+- Data loaded via AJAX from `/admin/kpi/data` (aggregate query, cached 60 s)
+- CSV export: `/admin/kpi/export` using Laravel `streamDownload` (StreamedResponse)
+- Cancelled bookings are excluded from totals
+
+### Performance log
+Measured with Chrome DevTools (Network tab, Disable cache, Fast 4G throttling, hard reload, `APP_DEBUG=false` with config/route/view cache).
+
+| Run | Load | Finish |
+|---|---|---|
+| 1 | 999 ms | 1.20 s |
+| 2 | 784 ms | 976 ms |
+| 3 | 822 ms | 1.03 s |
+| Avg | ~868 ms | ~1.07 s |
+
+`kpi/data` request time: _ ms (apni value likho)
+
+Result: page load stays under 2 s in the local test. Free host test: pending (will be measured after deployment).
+Screenshot: `docs/performance-kpi.png`
+Optimizations: single aggregate query, index on `event_date`, 60 s response cache, Chart.js via CDN.
