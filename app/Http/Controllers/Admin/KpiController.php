@@ -50,7 +50,7 @@ class KpiController extends Controller
         ]);
     }
 
-    private function buildData(): array
+    /*private function buildData(): array
     {
         $monthly = $this->monthly();
 
@@ -60,7 +60,7 @@ class KpiController extends Controller
             'bookings' => $monthly->pluck('bookings'),
             'revenue'  => $monthly->pluck('revenue'),
         ];
-    }
+    }*/
 
     private function summary(): array
     {
@@ -74,7 +74,7 @@ class KpiController extends Controller
         ];
     }
 
-    private function monthly()
+    /*private function monthly()
     {
         return Booking::where('status', '!=', 'cancelled')
             ->selectRaw("DATE_FORMAT(event_date, '%Y-%m') as month, COUNT(*) as bookings, COALESCE(SUM(amount), 0) as revenue")
@@ -82,4 +82,35 @@ class KpiController extends Controller
             ->orderBy('month')
             ->get();
     }
+            */
+
+    private function monthExpr(): string
+{
+    return match (DB::connection()->getDriverName()) {
+        'pgsql'  => "to_char(event_date, 'YYYY-MM')",
+        'sqlite' => "strftime('%Y-%m', event_date)",
+        default  => "DATE_FORMAT(event_date, '%Y-%m')",
+    };
+}
+
+private function monthly()
+{
+    return Booking::where('status', '!=', 'cancelled')
+        ->selectRaw($this->monthExpr() . ' as month, COUNT(*) as bookings, COALESCE(SUM(amount), 0) as revenue')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+}
+
+private function buildData(): array
+{
+    $monthly = $this->monthly();
+
+    return [
+        'summary'  => $this->summary(),
+        'labels'   => $monthly->pluck('month')->values(),
+        'bookings' => $monthly->pluck('bookings')->map(fn ($v) => (int) $v)->values(),
+        'revenue'  => $monthly->pluck('revenue')->map(fn ($v) => (float) $v)->values(),
+    ];
+}
 }
