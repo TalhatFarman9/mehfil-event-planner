@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: PHP + Apache
-FROM php:8.3-apache
+FROM php:8.5-apache
 RUN apt-get update && apt-get install -y --no-install-recommends git unzip libpq-dev libzip-dev \
     && docker-php-ext-install pdo_pgsql zip \
     && a2enmod rewrite \
@@ -29,5 +29,5 @@ RUN composer dump-autoload --optimize --no-dev \
     && chown -R www-data:www-data storage bootstrap/cache
 
 COPY docker/start.sh /start.sh
-RUN chmod +x /start.sh
+RUN sed -i 's/\r$//' /start.sh && chmod +x /start.sh
 CMD ["/start.sh"]
