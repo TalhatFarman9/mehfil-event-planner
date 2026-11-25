@@ -40,5 +40,8 @@ class DatabaseSeeder extends Seeder
         if (Booking::count() === 0) {
             Booking::factory()->count(35)->create();
         }
+
+        $this->call([AdminSeeder::class, DemoBookingSeeder::class]);
+        
     }
 }

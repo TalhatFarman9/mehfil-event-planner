@@ -63,6 +63,9 @@ class ProfileTest extends TestCase
 
     public function test_user_can_delete_their_account(): void
     {
+
+        //$this->withoutExceptionHandling();
+
         $user = User::factory()->create();
 
         $response = $this
